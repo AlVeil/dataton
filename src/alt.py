@@ -1,9 +1,3 @@
-import geopandas as gpd
-import folium
-from folium import GeoJson
-import json
-import os
-
 def create_zone_map():
     # Get the absolute path
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -15,7 +9,7 @@ def create_zone_map():
     
     try:
         # First try to read as JSON
-        with open(geojson_path, 'r') as f:
+        with open(geojson_path, 'r', encoding='utf-8') as f:  # Added encoding='utf-8'
             geojson_data = json.load(f)
             
         # Convert to GeoDataFrame
@@ -55,15 +49,4 @@ def create_zone_map():
     except FileNotFoundError:
         print(f"File not found. Current directory is: {os.getcwd()}")
         print(f"Directory contents of {os.path.dirname(geojson_path)}:")
-        print(os.listdir(os.path.dirname(geojson_path)))
-        raise
-    except json.JSONDecodeError:
-        print("File found but not valid JSON")
-        raise
-    except Exception as e:
-        print(f"Unexpected error: {str(e)}")
-        raise
-
-if __name__ == "__main__":
-    map_zones = create_zone_map()
-    map_zones.save('map.html')
+        p
